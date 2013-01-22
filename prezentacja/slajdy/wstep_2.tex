@@ -1,0 +1,40 @@
+\begin{frame}{Opis problemu}
+    \begin{block}{Aukcje kombinatoryczne}
+        W aukcjach kombinatorycznych (ang.combinatorialauc-tion) przedmiotem handlu jest wiele towarów. Uczestnicy mogą składać oferty na zbiory towarów i te oferty s ą nie-podzielne, tzn. muszą być przyjęte w całości lub w całości odrzucone. Problem wyznaczania zbioru ofert przyjętych maksymalizujących przychódw takiej aukcji jest w ogólnym przypadku NP -trudnym problemem kombinatorycznym.
+    \end{block}
+    % http://www.academia.edu/395279/ALGORYTMY_PRZYBLIZONEGO_ROZWI_AZYWANIA_PROBLEMU_AUKCJI_KOMBINATORYCZNEJ
+\end{frame}
+
+\begin{frame}{Representacja danych i rozwiązania}
+
+    \begin{block}{Reprezentacja danych}
+        Dane to liczba towarów $n$ i $m$ ofert, gdzie każda oferta to lista towarów i proponowana za nie cena.
+    \end{block}
+
+    \begin{block}{Reprezentajca rozwiązania}
+        Permutacja ofert, którą rozumiemy jako kolejność rozpatrywania ofert.
+        Oferta jest przyjmowana jeśli żaden z jej towarów nie został już wykupiony przez jakąs wcześniejszą ofertę.
+    \end{block}
+
+    \begin{block}{Funkcja celu}
+        Akceptujemy oferty w kolejności występowania ich identyfikatorów w permutacji i wybierajać te, których towary są jeszcze dostępne.
+        Jako wartość celu przyjmujemy sume cen zaakceptowanych ofert.
+        %\begin{equation}
+        %    f(x) = \sum\limits_{i=1}^{m} o_{m,1}
+        %\end{equation}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Rozwiązanie problemu}
+    \begin{itemize}
+        \item Do rozwiązania problemu wykorzystujemy algorytm SGA.
+        \item Operator krzyżowania to lekko zmodyfikowany operaotr PMX (staramy sie aby wymieniane środkowe segenty były częściej wybierane z lewej storny osobnika niz prawej).
+        \item Operator mutacji przesuwa całą permutacje o jeden element w lewo.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Dane testowe}
+    Do generowania danych testów korzystamy z generatora stworzonego przez bla bla.
+\end{frame}
+
+
