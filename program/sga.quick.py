@@ -31,7 +31,7 @@ class SGA(object):
             population = self.replacement(population, childs)
             #print "================"
             #print population
-            print population[0], evaluate(self.instance, population[0])
+            #print population[0], evaluate(self.instance, population[0])
             self.evaluate_population(population)
 
         print evaluate(instance, self.best[1], True), self.i
@@ -48,12 +48,14 @@ class SGA(object):
         self.log[0].append(self.i)
         self.log[1].append(abs(weighted[0][0]))
         uniq = len(set([w for w, x in weighted])) # prints number of unique elements in population
+        uniq_el = len(set([str(x) for w, x in weighted])) # prints number of unique elements in population
+        print "uniques %d / %d" % (uniq, uniq_el)
         ratio = 1. * uniq / self.size
         self.param_m = max(0.05, (1. - ratio) / 4.)
 
         if not self.best or self.best[0] < weighted[0][0]:
-            #if self.best:
-                #print "improved from %d to %d (iter %d, T=%f)" % (self.best[0], weighted[0][0], self.i, self.T)
+            if self.best:
+                print "improved from %d to %d (iter %d, T=%f)" % (self.best[0], weighted[0][0], self.i, self.T)
             self.best = weighted[0]
         self.T = self.T * self.Tn
 
@@ -96,8 +98,12 @@ class SGA(object):
 
         if sum_f == 0.0:
             sum_f = 1.0
-            print "Population has 1 unique element"
+            print "Population has 1 unique element (iter %d)" % self.i
             return []
+        #if sum_f == 0.0:
+            #l = len(weighted)
+            #results = [(1./l, x) for (w, x) in weighted]
+        #else:
         results = [((w-min_f)/sum_f, x) for (w, x) in weighted]
 
         roulette = []
@@ -172,18 +178,18 @@ class SGA(object):
             if random.uniform(0, 1) < param_m:  # small probability of mutation
                 ta, tb = self.random_divide()
                 x = random.uniform(0, 1)
-                #if x < 0.2:
-                #    # swap mutation
-                #    elem = elem[:ta] + elem[tb:tb+1] + elem[ta+1:tb] + elem[ta:ta+1] + elem[tb+1:]
-                #elif x < 0.5:
-                #    # shift mutation
-                #    elem = elem[:ta] + elem[ta+1:tb] + elem[ta:ta+1] + elem[tb:]
-                #else:
-                #    # reverse mutation
-                #    elem = elem[:ta+1] + elem[tb:ta:-1] + elem[tb+1:]
-                e0 = elem[0]
-                elem = elem[1:]
-                elem.append(e0)
+                if x < 0.2:
+                   # swap mutation
+                   elem = elem[:ta] + elem[tb:tb+1] + elem[ta+1:tb] + elem[ta:ta+1] + elem[tb+1:]
+                elif x < 0.8:
+                   # shift mutation
+                   # elem = elem[:ta] + elem[ta+1:tb] + elem[ta:ta+1] + elem[tb:]
+                   e0 = elem[0]
+                   elem = elem[1:]
+                   elem.append(e0)
+                else:
+                   # reverse mutation
+                   elem = elem[:ta+1] + elem[tb:ta:-1] + elem[tb+1:]
 
             results.append(elem)
 
@@ -197,7 +203,7 @@ if __name__ == '__main__':
         scores = []
         results = []
         iters = 1 if len(sys.argv) == 2 else 1
-        instance = read_instance(sys.argv[1])        
+        instance = read_instance(sys.argv[1])
 	sga = SGA(instance)
 	max_iters = 1000
 	population_size = 100
