@@ -23,8 +23,10 @@ class SGA(object):
         population = self.random_population(size)
         self.evaluate_population(population)
         for i in xrange(1, iterations):
+            print len(population)
             self.i = i
             ps = self.crossover(population, param_c)
+            print "ps", len(ps)
             if not ps:
                 break
             childs = self.mutation(ps, self.param_m)
@@ -51,7 +53,8 @@ class SGA(object):
         uniq_el = len(set([str(x) for w, x in weighted])) # prints number of unique elements in population
         print "uniques %d / %d" % (uniq, uniq_el)
         ratio = 1. * uniq / self.size
-        self.param_m = max(0.05, (1. - ratio) / 4.)
+        self.param_m = max(0.05, (1. - ratio) / 2.)
+        #print self.param_m
 
         if not self.best or self.best[0] < weighted[0][0]:
             if self.best:
@@ -96,22 +99,33 @@ class SGA(object):
         for w in weighted:
             sum_f += w[0] - min_f
 
-        if sum_f == 0.0:
-            sum_f = 1.0
-            print "Population has 1 unique element (iter %d)" % self.i
-            return []
         #if sum_f == 0.0:
-            #l = len(weighted)
+            #sum_f = 1.0
+            #print "Population has 1 unique element (iter %d)" % self.i
+            #return []
+        if sum_f == 0.0:
+            l = len(weighted)
             #results = [(1./l, x) for (w, x) in weighted]
-        #else:
-        results = [((w-min_f)/sum_f, x) for (w, x) in weighted]
+            ##before = len(set([evaluate(instance, x) for w, x in results])) # prints number of unique elements in population
+            ##before_el = len(set([str(x) for w, x in results])) # prints number of unique elements in population
+            ##print str(results[-1])
+            d = int(l*0.6)
+            #results = results[:d] + [(1./l, x) for x in self.random_population(l-d)]
+            ##after = len(set([evaluate(instance, x) for w, x in results])) prints number of unique elements in population
+            ##after_el = len(set([str(x) for w, x in results])) prints number of unique elements in population
+            ##print "fn %d vs %d" % (before, after)
+            ##print "el %d vs %d" % (before_el, after_el)
+            ##print str(results[-1])
+            return population[:l] + self.random_population(l-d)
+        else:
+            results = [((w-min_f)/sum_f, x) for (w, x) in weighted]
 
         roulette = []
         s = 0
         for w, x in results:
             s += w
             roulette.append((s, x))
-        
+
         np = []
         while len(np) < self.M:
             parents = []
@@ -205,9 +219,9 @@ if __name__ == '__main__':
         iters = 1 if len(sys.argv) == 2 else 1
         instance = read_instance(sys.argv[1])
 	sga = SGA(instance)
-	max_iters = 1000
+	max_iters = 400
 	population_size = 100
-	m = 10
+	m = 80
 	for i in xrange(iters):
 		# matching 100, 100, 10
 		# matching 50, 100, 10

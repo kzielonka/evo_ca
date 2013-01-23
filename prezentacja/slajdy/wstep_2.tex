@@ -1,40 +1,88 @@
 \begin{frame}{Opis problemu}
     \begin{block}{Aukcje kombinatoryczne}
-        W aukcjach kombinatorycznych (ang.combinatorialauc-tion) przedmiotem handlu jest wiele towarów. Uczestnicy mogą składać oferty na zbiory towarów i te oferty s ą nie-podzielne, tzn. muszą być przyjęte w całości lub w całości odrzucone. Problem wyznaczania zbioru ofert przyjętych maksymalizujących przychódw takiej aukcji jest w ogólnym przypadku NP -trudnym problemem kombinatorycznym.
+        W aukcjach kombinatorycznych (ang. combinatorial auction) przedmiotem handlu jest wiele towarów.
+        Uczestnicy mogą składać oferty na zbiory towarów i te oferty są niepodzielne, tzn. muszą być przyjęte
+        w całości lub w całości odrzucone. Problem wyznaczania zbioru ofert przyjętych maksymalizujących
+        przychód w takiej aukcji jest w ogólnym przypadku NP trudnym problemem kombinatorycznym.
     \end{block}
     % http://www.academia.edu/395279/ALGORYTMY_PRZYBLIZONEGO_ROZWI_AZYWANIA_PROBLEMU_AUKCJI_KOMBINATORYCZNEJ
 \end{frame}
 
-\begin{frame}{Representacja danych i rozwiązania}
+\begin{frame}{Dane i rozwiązania}
 
-    \begin{block}{Reprezentacja danych}
-        Dane to liczba towarów $n$ i $m$ ofert, gdzie każda oferta to lista towarów i proponowana za nie cena.
+    \begin{block}{Dane}
+        Dane to liczba towarów $n$ i $m$ ofert, gdzie każda oferta to lista towarów i proponowana za nią cena.
+        Oferty te są niepodzielne, a każdy przedmiot może zostać kupiony tylko raz.
     \end{block}
 
-    \begin{block}{Reprezentajca rozwiązania}
-        Permutacja ofert, którą rozumiemy jako kolejność rozpatrywania ofert.
-        Oferta jest przyjmowana jeśli żaden z jej towarów nie został już wykupiony przez jakąs wcześniejszą ofertę.
+    \begin{block}{Rozwiązanie}
+        Rozwiązaniem nazywamy zbiór ofert, w którym żadne dwie oferty nie zawierają tego samego przedmiotu.
     \end{block}
 
     \begin{block}{Funkcja celu}
-        Akceptujemy oferty w kolejności występowania ich identyfikatorów w permutacji i wybierajać te, których towary są jeszcze dostępne.
-        Jako wartość celu przyjmujemy sume cen zaakceptowanych ofert.
-        %\begin{equation}
-        %    f(x) = \sum\limits_{i=1}^{m} o_{m,1}
-        %\end{equation}
+        Funkcją celu jest suma wartości wybranych ofert (przy czym zbiór ten spełnia wymagania zadania i oferty są
+        niesprzeczne).
     \end{block}
+
+\end{frame}
+
+\begin{frame}{Reprezentacja rozwiązania}
+Uwagi:
+\begin{itemize}
+\item naturalną reprezentacją byłby zbiór identyfikatorów ofert,
+\item ta reprezentacja nie pozwala jednak na efektywne stosowanie operatorów genetycznych
+\end{itemize}
+\vspace{1em}
+Alternatywy:
+\begin{itemize}
+\item wektor binarny
+\item permutacja
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reprezentacja rozwiązania - wektor binarny}
+Wektor binarny
+\begin{itemize}
+\item ciąg 0-1 długości równej liczbie ofert
+\item 1 oznacza, że oferta została zaakceptowana, a 0, że została odrzucona
+\item pozwala wykorzystać algorytm PBIL (wektor prawdopodobieństw)
+\end{itemize}
+\vspace{1em}
+Problemy
+\begin{itemize}
+\item nie uwzględnia problemu niesprzeczności ofert,
+\item ani nie pozwala na ustalenie kolejności ofert
+\end{itemize}
+Częściowo można to rozwiązać wybierając tylko niesprzeczne oferty zaczynając od lewej strony.
+\end{frame}
+
+\begin{frame}{Reprezentacja rozwiązania - permutacja}
+Permutacja
+\begin{itemize}
+\item ciąg liczb naturalnych od 1 do n (liczba ofert)
+\item permutacja oznacza kolejność rozpatrywania ofert
+\item pozwala wykorzystać standardowy algorytm SGA
+\end{itemize}
+\vspace{1em}
+Problemy
+\begin{itemize}
+\item niesprzeczność ofert jest rozwiązana akceptując niesprzeczne oferty zaczynając od lewej strony
+\item w zależności od instancji problemu, wpływ na funkcję celu może mieć tylko niewielki początkowy fragment permutacji
+\item wiele różnych osobników może mieć taki sam wynik funkcji celu
+\end{itemize}
+Wymienione problemy utrudniają generowanie osobników istotnie różnych (zarówno jako permutacja jak i wartość funkcji celu)
 \end{frame}
 
 \begin{frame}{Rozwiązanie problemu}
     \begin{itemize}
         \item Do rozwiązania problemu wykorzystujemy algorytm SGA.
-        \item Operator krzyżowania to lekko zmodyfikowany operaotr PMX (staramy sie aby wymieniane środkowe segenty były częściej wybierane z lewej storny osobnika niz prawej).
+        \item Operator krzyżowania to lekko zmodyfikowany operator PMX (staramy sie aby wymieniane środkowe segmenty były częściej wybierane z lewej storny osobnika niz prawej).
         \item Operator mutacji przesuwa całą permutacje o jeden element w lewo.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Dane testowe}
-    Do generowania danych testów korzystamy z generatora CATS. Jest on najbardziej popularnym narzedziem dla tego problemu i jak twierdzi autor generuje dane zbliżone dla realnych problemów tego typu.
+    Do generowania danych testów korzystamy z generatora CATS. Jest on najbardziej popularnym narzędziem dla tego problemu i jak twierdzi autor generuje dane zbliżone dla realnych problemów tego typu.
 \end{frame}
 
 
