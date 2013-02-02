@@ -1,0 +1,8 @@
+\subsection{Reprezentacja danych}
+Reprezetancja za pomoca wektora binarnego gdzie jedynke interpretujemy jako kondydature oferty do zaakceptowania, a zero za brak oferty w zbiorze ofert zaakceptowanych.
+Jeżeli oferta posiada jedynke w wektorze czyli jest kandydatem do zaakceptowania nie oznacza jeszcze, że zostanie dodana do zbioru ofert zaakceptowanych.
+
+Dzięki takiej reprezentacji możemy zastosować algorytm PBIL do rozwiązania tego problemu.
+
+\subsection{Funkcja celu}
+Oferty oznaczone jedynka rozumiemy jako oferty zaakceptowany. Dopuszczamy jednak możiwość występownia dwóch ofert zaakceptowanych o nierozłoącznym zbiorze towarów, ale wtedy preferujemy tą o mniejszym indeksie.

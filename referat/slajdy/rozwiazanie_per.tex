@@ -1,0 +1,66 @@
+\subsection{Reprezentacja rozwiązania}
+Rozwiązaniem problemu jest permutacja długości liczby ofert.
+Za oferty przyjęte jako zaakceptowane wybieramy zgodnie z kolejność występowania w permutacji z pominięciem tych, których towary pokrywały się z towarami jakiejs oferty wcześniej występującej.
+
+\subsection{Funkcja celu}
+Zgodnie z reprezentacją sumujemy te ceny tych ofert, które zostały zaakceptowane. Przeglądamy permutacje od lewej do prawej i wybieramy te oferty, których towary nie zostały wykupione przez wcześniejsze oferty.
+
+\subsection{Rozwiązanie}
+Do rozwiązania tego problemu użyliśmy algorytmu algorytmu SGA.
+\subsubsection{Krzyżowanie}
+Do krzyżowania użyliśmy lekko zmodyfikowanego algorytmu PMX.
+Założyliśmy, że funkcja celu zależy bardziej od elementów o mniejszym indeksie w permutacji niż większym.
+Elementy o mniejszy indeksie są bardziej preferowane co wynika z funkcji celu, a oferty o dalszych indeksach mogą być często wogle nie brane do rozwiazania.
+Dlatego staramy się, aby wymieniamy przez operator PMX środkowy segment zaczynał się cześciej w niskich indeksach.
+
+
+Wprowadzona modyfikacja polega na wyborze punktów $a$ i $b$ będących przedziałem wymienianego środkowego segmentu.
+W pierwotnej wersji były losowane dwie liczby $x, y$ i na ich podstawie wyliczane punkty $a$, $b$.
+\begin{equation}
+    a = min(x, y) \cdot n \ \wedge \ b = max(x, y) \cdot n \ \ \hbox{gdzie n to długość permutacji}
+\end{equation}
+W zmodyfikowanej wersji punty były wyliczane w poniższy sposób.
+\begin{equation}
+    a = min(x, y)^2 \cdot n \ \wedge \ b = max(x, y) \cdot n
+\end{equation}
+
+\subsubsection{Mutacja}
+Wybrana przez nas mutacja jest dość prosta, ale okazała się znacząco poprawiać wyniki.
+Polega na cyklicznym przesunięciu całej permutacji o jeden element w lewo. 
+W ten sposób oferta, która była pierwsz w permutacji staje się ostatnio. 
+Z zasady działania funkcji celu wielmu, że pierwsza oferta jest zawsze wybierana, a ostatnio dość rzadko dzięki czemu ta mutacja dość znacząco zmieniała osobniki.
+
+\subsubsection{Wymiana}
+Wymiana elemntów polega na zastąpieniu najgorszych osobników stałą liczbą, ustawianą jako parametr, zmutowanych i skrzyżowancyh osobników.
+Dzięku odpowiednim doborze tej liczby populacja zawsze pamiętała stare najlepsze osobniki przez pewną liczba iteracji co wpływało na poprawę znajdowanych wyników.
+
+\subsubsection{Warunek stopu}
+Na początku za warunek stopu przyjeliśmy unikalność wszystkich elementów.
+Gdy wartości funkcji celu dla wszystkich elementół w populacji były takie same to przerywaliśmy algorytm.
+Takie podejście okazało się jednak błędne, gdyż pomimo iż wartości funkcji celu były takie same osobniki były znacząco różne w sensie permutacji i pozwolenie im na dalsze iteracje poprawiło trochę wyniki.
+
+\section{Wyniki}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_20_0000_txt_1.png}
+    \caption{Wykres dla problemu 'matching' o parametrach 20 ofert i 100 towarów.}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_40_0000_txt_3.png}
+    \caption{Wykres dla problemu 'matching' o parametrach 40 ofert i 100 towarów.}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=10cm]{wykresy/L5_bids_100_goods_20_0000_txt_1.png}
+    \caption{Wykres dla problemu 'L5' o parametrach 20 ofert i 100 towarów.}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_20_0000_txt_uniq.png}
+\end{figure}
+
+
