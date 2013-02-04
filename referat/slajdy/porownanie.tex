@@ -1,0 +1,15 @@
+Przeprowadzone testy wskazują, że zdecydowanie lepszy jest algorytm SGA.
+W tabeli poniżej (\ref{tabela:porownanie}) przestawione, są wyniki najelpszych rezulatów dla trzech algorytmów.
+Algorytmy uruchamialiśmy wielektornie i wyniki przedstawione w tablece oddają najczęściej występującą tendencje.
+Zdarzało się, że algorytm losowy był lepszy od algorutmy PBIL, ale SGA prawie zawsze wyprzedzał oba te algorytmy.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{c c c c}
+        Problem & Algorytm losowy & PBIL & SGA \\ \hline\hline
+        matching, 100 ofert, 20 towarów & 43.683 & 43.848 & 46.793 \\
+        matching, 100 ofert, 40 towarów & 65.543 & 67.188 & 72.785 \\
+    \end{tabular}
+    \caption{Porównanie algorytmów}
+    \label{tabela:porownanie}
+\end{table}

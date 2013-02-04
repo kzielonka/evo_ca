@@ -7,6 +7,9 @@ Zgodnie z reprezentacją sumujemy te ceny tych ofert, które zostały zaakceptow
 
 \subsection{Rozwiązanie}
 Do rozwiązania tego problemu użyliśmy algorytmu algorytmu SGA.
+Jego parametry najcześciej na 200 iteracji i populacje o rozmiarze 40.
+Podczas każdej iteracji, nie wymienialiśmy całej populacje, a jedynie 10 osobników.
+
 \subsubsection{Krzyżowanie}
 Do krzyżowania użyliśmy lekko zmodyfikowanego algorytmu PMX.
 Założyliśmy, że funkcja celu zależy bardziej od elementów o mniejszym indeksie w permutacji niż większym.
@@ -39,28 +42,44 @@ Na początku za warunek stopu przyjeliśmy unikalność wszystkich elementów.
 Gdy wartości funkcji celu dla wszystkich elementół w populacji były takie same to przerywaliśmy algorytm.
 Takie podejście okazało się jednak błędne, gdyż pomimo iż wartości funkcji celu były takie same osobniki były znacząco różne w sensie permutacji i pozwolenie im na dalsze iteracje poprawiło trochę wyniki.
 
-\section{Wyniki}
+\subsection{Wyniki}
+Wyniki przestawione są na wykresach (\ref{wyk:sga1}, \ref{wyk:sga2}, \ref{wyk:sga3}, \ref{wyk:sga4}).
+Na niebiesko zaznaczono wynik dla algorytmu SGA dla kolejnych iteracji.
+Na zielono zaznaczono najlepszy wynik algorytmu losowego, który wybierał wynik z takiej samej puli losowych osobników ile lącznie przegląda SGA.
+
+
+Na wykresach \ref{wyk:sga1}, \ref{wyk:sga2} i \ref{wyk:sga3} algortym kończył swoje działanie gdy wszsytkie osobniki w populacji były unikalne pod względem wartości funkcji celu.
+Na wykresie \ref{wyk:sga4} przestawiona jest wersja algorytmu, która kończyła poszukiwania  po ustalonej liczbie iteracji.
+Podczas algorytmu próbowaliśmy również podmieniać niektóre stare osobniki nowymi losowymi gdy wszystkie poprzednie były już unikalne.
+Jak widać takie podejście okazało się być lepsze od poprzedniego gdyż algorytm po pewnym czasie działania znajdował troche lepsze rozwiązanie.
+
+
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_20_0000_txt_1.png}
-    \caption{Wykres dla problemu 'matching' o parametrach 20 ofert i 100 towarów.}
+    \caption{Wykres dla problemu 'matching' o parametrach 100 ofert i 20 towarów.}
+    \label{wyk:sga1}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_40_0000_txt_3.png}
-    \caption{Wykres dla problemu 'matching' o parametrach 40 ofert i 100 towarów.}
+    \caption{Wykres dla problemu 'matching' o parametrach 100 ofert i 40 towarów.}
+    \label{wyk:sga2}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=10cm]{wykresy/L5_bids_100_goods_20_0000_txt_1.png}
-    \caption{Wykres dla problemu 'L5' o parametrach 20 ofert i 100 towarów.}
+    \caption{Wykres dla problemu 'L5' o parametrach 100 ofert i 20 towarów.}
+    \label{wyk:sga3}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_20_0000_txt_uniq.png}
+    \caption{Wykres dla problemu 'matching' o parametrach 100 ofert i 20 towarów.}
+    \label{wyk:sga4}
 \end{figure}
 
 

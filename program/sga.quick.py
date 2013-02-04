@@ -5,6 +5,7 @@ from plot import plot
 import random
 from problem import read_instance, evaluate
 from brut import Brut
+from pbil import PBIL
 
 class SGA(object):
 
@@ -219,14 +220,15 @@ if __name__ == '__main__':
         iters = 1 if len(sys.argv) == 2 else 1
         instance = read_instance(sys.argv[1])
 	sga = SGA(instance)
-	max_iters = 400
-	population_size = 100
-	m = 80
+	max_iters = 200
+	population_size = 40
+	m = 10
 	for i in xrange(iters):
 		# matching 100, 100, 10
 		# matching 50, 100, 10
 	        logs, _ =  sga.go(population_size, max_iters, m, 0.9, 0.4)
 		results.append(logs)	
+        print logs[1][-1]
         #scores.sort()
         #print "Best score: ", scores[0]
         #print "Average score:", 1. * sum([e for e, s in scores]) / len(scores),
@@ -234,8 +236,8 @@ if __name__ == '__main__':
 	brut = Brut(instance)
 	brut_result = brut.run(len(logs[0])*m+population_size)
 	results.append((logs[0], [brut_result]*len(logs[0])))
-	print brut_result
-        if len(sys.argv) > 2:
-            inst = sys.argv[1].split('/')[-1]
-            plot(results, 'SGA + PMX + Swap & Shift Mutations (instance: %s)'
-                 % (inst), '%s_%s' % (inst, sys.argv[2]))
+    print brut_result
+    if len(sys.argv) > 2:
+        inst = sys.argv[1].split('/')[-1]
+        plot(results, 'SGA + PMX + Swap & Shift Mutations (instance: %s)'
+            % (inst), '%s_%s' % (inst, sys.argv[2]))
