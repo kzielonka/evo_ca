@@ -88,7 +88,7 @@ class SGA(object):
                 return self.lower_bound(roulette[:l+1], k)
             else:
                 return self.lower_bound(roulette[l:], k)
-         
+
     def crossover(self, population, param_c):
         weighted = [(evaluate(instance, elem), elem) for elem in population]
 
@@ -106,17 +106,7 @@ class SGA(object):
             #return []
         if sum_f == 0.0:
             l = len(weighted)
-            #results = [(1./l, x) for (w, x) in weighted]
-            ##before = len(set([evaluate(instance, x) for w, x in results])) # prints number of unique elements in population
-            ##before_el = len(set([str(x) for w, x in results])) # prints number of unique elements in population
-            ##print str(results[-1])
             d = int(l*0.6)
-            #results = results[:d] + [(1./l, x) for x in self.random_population(l-d)]
-            ##after = len(set([evaluate(instance, x) for w, x in results])) prints number of unique elements in population
-            ##after_el = len(set([str(x) for w, x in results])) prints number of unique elements in population
-            ##print "fn %d vs %d" % (before, after)
-            ##print "el %d vs %d" % (before_el, after_el)
-            ##print str(results[-1])
             return population[:l] + self.random_population(l-d)
         else:
             results = [((w-min_f)/sum_f, x) for (w, x) in weighted]
@@ -181,10 +171,6 @@ class SGA(object):
         c1 = la + list(lb) + lc
         c2 = ra + list(rb) + rc
 
-        # verify assertion 
-        #for i in xrange(1, self.instance[0]):
-            #if i not in c1 or i not in c2:
-                #raise Exception("PMX assertion error %d" % i)
         return c1, c2
 
     def mutation(self, population, param_m):
@@ -197,8 +183,7 @@ class SGA(object):
                    # swap mutation
                    elem = elem[:ta] + elem[tb:tb+1] + elem[ta+1:tb] + elem[ta:ta+1] + elem[tb+1:]
                 elif x < 0.8:
-                   # shift mutation
-                   # elem = elem[:ta] + elem[ta+1:tb] + elem[ta:ta+1] + elem[tb:]
+                   # modified total shift mutation
                    e0 = elem[0]
                    elem = elem[1:]
                    elem.append(e0)

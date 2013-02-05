@@ -1,20 +1,20 @@
-\subsection{Reprezentacja danych}
-Reprezetancja za pomoca wektora binarnego gdzie jedynke interpretujemy jako kondydature oferty do zaakceptowania, a zero za brak oferty w zbiorze ofert zaakceptowanych.
-Jeżeli oferta posiada jedynke w wektorze czyli jest kandydatem do zaakceptowania nie oznacza jeszcze, że zostanie dodana do zbioru ofert zaakceptowanych.
+\subsection{Reprezentacja rozwiązania}
 
-Dzięki takiej reprezentacji możemy zastosować algorytm PBIL do rozwiązania tego problemu.
+Reprezentacja za pomocą wektora binarnego w której jedynkę interpretujemy jako ofertę możliwą do zaakceptowania, a zero za jej definitywne odrzucenie. W szczególności, wartość 1 nie oznacza, że oferta zostanie zaakceptowana ze względu na możliwy konflikt z inną ofertą (dzięki temu zyskujemy to, że każdy osobnik w populacji koduje poprawne rozwiązanie).
+
+Taka reprezentacja pozwoliła nam zastosować algorytm PBIL do rozwiązania tego problemu.
 
 \subsection{Funkcja celu}
-Oferty oznaczone jedynka rozumiemy jako oferty zaakceptowany. Dopuszczamy jednak możiwość występownia dwóch ofert zaakceptowanych o nierozłoącznym zbiorze towarów, ale wtedy preferujemy tą o mniejszym indeksie
+Funkcja celu analizuje wektor binarny rozwiązania od lewej do prawej, akceptując kolejne oferty których bit ustawiony jest na 1. W przypadku wykrycia sprzeczności z wcześniej zaakceptowaną ofertą jest ona pomijana.
 
 \subsection{Rozwiązanie}
 Do rozwiązania tego problemu użyliśmy algorymu PBIL.
 Współczyniki uczenia, prawdopodobieństwa mutacji i zaburzenia podczas mutacji ustawiliśmy kolejno na 0.2, $\frac{1}{\text{liczba ofert}}$ i 0.1.
-Liczbe iteracji ustawialiśmy na 100, a populacje na 20.
+Liczbę iteracji ustawialiśmy na 100, a populację na 20.
 
 \subsection{Wyniki}
 Wyniki zaprezentowane są na wykresach poniżej (\ref{wyk:pbil1}, \ref{wyk:pbil2}).
-Niebieską linią oznaczyliśmy najepszego osobnika dla algorytmu PBIL w danej iteracji. Zieloną najlepszy wynik algorytm losowego, który wybierał z takiej samej puli losowych osobników ile łącznie przegląda PBIL.
+Niebieską linią oznaczyliśmy najepszego osobnika dla algorytmu PBIL w danej iteracji. Zielona linia oznacza najlepszy wynik algorytmu losowego, który wybierał najlepszy element ze zbioru osobników o mocy równej liczbie elementów przetwarzanych przez algorytm PBIL.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_20_0000_txt_pbil.png}
@@ -25,6 +25,6 @@ Niebieską linią oznaczyliśmy najepszego osobnika dla algorytmu PBIL w danej i
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=10cm]{wykresy/matching_bids_100_goods_40_0000_txt_pbil.png}
-    \caption{Wykres dla problemu 'matching' z 40 ofertami i 100 towarmi.}
+    \caption{Wykres dla problemu 'matching' z 40 ofertami i 100 towarami.}
     \label{wyk:pbil2}
 \end{figure}

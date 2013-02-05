@@ -1,10 +1,13 @@
 Przeprowadzone testy wyraźnie pokazują, że algorytm SGA jest znacznie lepszy od algorytmów PBIL i algorytmu losowego.
-Zdarzało się, że algorytm losowy dawał prawie tak dobre wyniki jak SGA lub równe ale w większości przypadków był od niego gorszy.
-Algorytm PBIL okazał się być troche lepszy od algorutmy losowego, ale zdarzały się sytuacje, że oba były równe, a nawet algorytm losowy był lepszy.
-Zaóważyliśmy, że trudność danych testowych dla algorytmu losowego, zależa od stosunku towarów do ofert.
-Algorytm SGA i PBIL okazały się być znacznie od niego lepsze gdy liczba ofert znacznie przewyższa liczbę towarów.
+Zdarzało się, że algorytm losowy dawał prawie tak dobre wyniki jak SGA lub równe, ale w większości przypadków był od niego gorszy.
+Algorytm PBIL okazał się być trochę lepszy od algorytmu losowego, ale zdarzały się sytuacje, że oba były równe, a nawet algorytm losowy był lepszy.
+Zaóważyliśmy, że trudność danych testowych dla algorytmu losowego, zależała od stosunku towarów do ofert.
+Algorytm SGA i PBIL okazały się być znacznie od niego lepsze gdy liczba ofert znacznie przewyższa liczbę towarów (czyli jest znacznie więcej kolidujących ze sobą ofert).
 
 
-Wydaje nam się, że najtrudniejszymelementm w tych algorytmach to dobranie odpowiendiej reprezentacji danych.
-Reprezentacje które wybraliśmy mają tą wade, że niektóre zbiory zaakceptowanych ofert mogą być nierównomiernie reprezentowane przez osobników.
-W efekcie algorytm ma problemy ze znalezieniem optymalnego zbioru ofert, który może być reprezentowany przez bardzo małą liczbe osobników.
+Wydaje nam się, że najtrudniejszym  elementem w tych algorytmach było dobranie odpowiedniej reprezentacji danych.
+Reprezentacje które wybraliśmy mają tą wadę, że niektóre zbiory zaakceptowanych ofert mogą być nierównomiernie reprezentowane przez osobniki.
+W efekcie algorytm ma problemy ze znalezieniem optymalnego zbioru ofert, który może być reprezentowany przez bardzo małą liczbę osobników.
+
+
+Dodatkowo, funkcja celu w pewnych momentach staje się skokowa -- dla danych z dużą liczbą kolizji ofert tylko początkowy fragment permutacji może mieć znaczenie przy obliczaniu zysku z aukcji. Utrudniło to zdecydowanie działanie standardowych operatorów mutacji, które często nie wpływały nawet na wynik funkcji przystosowania.

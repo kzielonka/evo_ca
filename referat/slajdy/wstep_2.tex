@@ -12,24 +12,24 @@ Oferty te są niepodzielne, a każdy przedmiot może zostać kupiony tylko raz.
 Rozwiązaniem nazywamy zbiór ofert, w którym żadne dwie oferty nie zawierają tego samego przedmiotu.
 
 \subsection{Funkcja celu}
-Funkcją celu jest suma wartości ze zbioru $A$ wybrancyh ofert (przy czym zbiór ten spełnia wymagania zadania i oferty są niesprzeczne).
+Funkcją celu jest suma wartości ze zbioru $A$ wybranych ofert (przy czym zbiór ten spełnia wymagania zadania i oferty są niesprzeczne).
 
 \begin{equation}
     f(A) = \sum\limits_{a \in A} cena(a)
 \end{equation}
 
 \subsection{Reprezentacja danych}
-Uwagi:
+Naturalną reprezentacją byłby zbiór identyfikatorów ofert (liczb naturalnych) które zostały wybrane (w szczególności oferty te powinny być niesprzeczne). Ta reprezentacja nie pozwala jednak na efektywne stosowanie operatorów genetycznych i nie nadawała się do zastosowania w algorytmie ewolucyjnym.
+
+\newpage
+
+Postanowiliśmy wypróbować dwa rodzaje kodowania rozwiązania:
 \begin{itemize}
-    \item naturalną reprezentacją byłby zbiór identyfikatorów ofert,
-    \item ta reprezentacja nie pozwala jednak na efektywne stosowanie operatorów genetycznych
+    \item wektor binarny,
+    \item permutacja liczb naturalnych.
 \end{itemize}
-\vspace{1em}
-Alternatywy:
-\begin{itemize}
-    \item wektor binarny
-    \item permutacja
-\end{itemize}
+
+Oba rozwiązania wymagały dodatkowej modyfikacji funkcji celu która na bieżąco odrzucała sprzeczne oferty (w związku z tym obliczenie wartości funkcji przystosowania danego osobnika stało się bardziej złożone czasowo).
 
 \subsection{Dane testowe}
     Do generowania danych testów korzystamy z generatora CATS. Jest on najbardziej popularnym narzędziem dla tego problemu i jak twierdzi autor generuje dane zbliżone dla realnych problemów tego typu.
